@@ -1,0 +1,62 @@
+
+class Solution {
+    public int[][] updateMatrix(int[][] matrix) {
+       int row = matrix.length;
+        int col = matrix[0].length;
+        if(row == 0)
+            return matrix;
+        
+        List<int[]> directions = Arrays.asList(
+            new int[] {1,0},
+            new int[] {-1,0},
+            new int[] {0,1},
+            new int[] {0,-1});
+        
+        Queue<int[]> queue = new LinkedList<>();
+        int[][] vis = new int[row][col];
+        int step = 1;
+         for(int r = 0 ; r < row ; r++)
+         {
+             for( int c = 0 ; c < col ; c++)
+             {
+                 if(matrix[r][c] == 0)
+                 {
+                    queue.add(new int[] { r ,c});
+                    vis[r][c] = 1;
+                 }
+                     
+                     
+             }
+         }
+        
+        while(!queue.isEmpty())
+        {
+            int size  = queue.size();
+            for(int k = 0 ; k < size; k++){
+                
+            int[] point = queue.poll();
+            int r = point[0];
+            int c = point[1];
+            
+            for(int[] dir : directions)
+            {
+                int sr = r + dir[0];
+                int sc = c + dir[1];
+                
+                if(sr >= 0 && sr < row && sc >= 0 && sc < col && vis[sr][sc] == 0)
+                {
+                    vis[sr][sc] = 1;
+                    matrix[sr][sc] = step;
+                    queue.add(new int[] {sr ,sc});
+                }
+                    
+                
+            }
+                
+        }   
+           step++;
+        }
+        
+        return matrix;
+    }
+}
